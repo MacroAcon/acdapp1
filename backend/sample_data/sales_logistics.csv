@@ -1,0 +1,21 @@
+order_id,date,product_name,category,quantity,unit_price,shipping_cost,delivery_time_days,region,warehouse,delivery_status
+ORD001,2024-01-01,Laptop Pro X,Electronics,2,1299.99,25.50,3,Northeast,WH-NY-01,Delivered
+ORD002,2024-01-01,Office Chair Deluxe,Furniture,5,199.99,45.75,5,West,WH-CA-02,Delivered
+ORD003,2024-01-02,Wireless Mouse,Electronics,10,29.99,8.25,2,Southeast,WH-FL-01,Delivered
+ORD004,2024-01-02,Standing Desk,Furniture,3,399.99,89.99,7,Midwest,WH-IL-01,Delayed
+ORD005,2024-01-03,Monitor 27",Electronics,4,349.99,35.00,4,West,WH-CA-02,Delivered
+ORD006,2024-01-03,Filing Cabinet,Furniture,2,149.99,65.50,6,Northeast,WH-NY-01,Delivered
+ORD007,2024-01-04,Keyboard RGB,Electronics,8,79.99,12.75,2,Southeast,WH-FL-01,Delivered
+ORD008,2024-01-04,Conference Table,Furniture,1,899.99,150.00,10,Midwest,WH-IL-01,Pending
+ORD009,2024-01-05,Tablet Pro,Electronics,5,599.99,20.25,3,West,WH-CA-02,Delivered
+ORD010,2024-01-05,Ergonomic Chair,Furniture,4,299.99,55.50,5,Northeast,WH-NY-01,Delayed
+ORD011,2024-01-06,Wireless Headphones,Electronics,15,89.99,15.75,2,Southeast,WH-FL-01,Delivered
+ORD012,2024-01-06,Bookshelf XL,Furniture,3,199.99,75.25,8,Midwest,WH-IL-01,Delivered
+ORD013,2024-01-07,Desktop PC,Electronics,2,999.99,45.50,4,West,WH-CA-02,Pending
+ORD014,2024-01-07,Office Desk,Furniture,6,249.99,85.00,6,Northeast,WH-NY-01,Delivered
+ORD015,2024-01-08,Smart Watch,Electronics,12,199.99,10.25,2,Southeast,WH-FL-01,Delivered
+ORD016,2024-01-08,Storage Cabinet,Furniture,2,349.99,95.50,7,Midwest,WH-IL-01,Delayed
+ORD017,2024-01-09,Printer Pro,Electronics,3,449.99,40.75,4,West,WH-CA-02,Delivered
+ORD018,2024-01-09,Task Chair,Furniture,8,159.99,60.25,5,Northeast,WH-NY-01,Delivered
+ORD019,2024-01-10,External SSD,Electronics,20,79.99,8.50,2,Southeast,WH-FL-01,Delivered
+ORD020,2024-01-10,Meeting Table,Furniture,1,699.99,125.75,9,Midwest,WH-IL-01,Pending 
