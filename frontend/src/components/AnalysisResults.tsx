@@ -7,10 +7,6 @@ import {
   Divider,
   Grid,
   Alert,
-  List,
-  ListItem,
-  ListItemText,
-  Rating,
 } from '@mui/material';
 import {
   BarChart,
@@ -49,14 +45,14 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode 
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
-            Key Insights
+            {isAgentMode ? 'NARRATIVE_INSIGHTS' : 'Key Insights'}
           </Typography>
           <Typography variant="body1" paragraph>
             {narrative.executive_summary}
           </Typography>
           <Box sx={{ mt: 2 }}>
             <Typography variant="subtitle1" gutterBottom>
-              Key Findings
+              {isAgentMode ? 'KEY_FINDINGS' : 'Key Findings'}
             </Typography>
             {narrative.key_findings.map((finding, index) => (
               <Typography key={index} variant="body2" sx={{ ml: 2, mb: 1 }}>
@@ -66,7 +62,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode 
           </Box>
           <Box sx={{ mt: 2 }}>
             <Typography variant="subtitle1" gutterBottom>
-              Business Implications
+              {isAgentMode ? 'BUSINESS_IMPLICATIONS' : 'Business Implications'}
             </Typography>
             {narrative.business_implications.map((implication, index) => (
               <Typography key={index} variant="body2" sx={{ ml: 2, mb: 1 }}>
@@ -76,7 +72,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode 
           </Box>
           <Box sx={{ mt: 2 }}>
             <Typography variant="subtitle1" gutterBottom>
-              Recommendations
+              {isAgentMode ? 'RECOMMENDATIONS' : 'Recommendations'}
             </Typography>
             {narrative.recommendations.map((recommendation, index) => (
               <Typography key={index} variant="body2" sx={{ ml: 2, mb: 1 }}>
@@ -91,12 +87,12 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode 
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
-            Detailed Analysis
+            {isAgentMode ? 'DETAILED_ANALYSIS' : 'Detailed Analysis'}
           </Typography>
           {Object.entries(analysis).map(([key, value]) => (
             <Box key={key} sx={{ mb: 2 }}>
               <Typography variant="subtitle1" color="primary">
-                {key}
+                {isAgentMode ? `ANALYSIS_${key.toUpperCase()}` : key}
               </Typography>
               <Typography variant="body2">
                 {typeof value === 'string' ? value : JSON.stringify(value, null, 2)}
@@ -113,7 +109,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode 
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
-                  {plot.name || `Visualization ${index + 1}`}
+                  {isAgentMode ? `VISUALIZATION_${index + 1}` : (plot.name || `Visualization ${index + 1}`)}
                 </Typography>
                 <Box sx={{ height: 300 }}>
                   <ResponsiveContainer width="100%" height="100%">
@@ -123,7 +119,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode 
                       <YAxis />
                       <Tooltip />
                       <Legend />
-                      <Bar dataKey="value" fill="#8884d8" />
+                      <Bar dataKey="value" fill="#00FFB2" />
                     </BarChart>
                   </ResponsiveContainer>
                 </Box>
@@ -137,12 +133,12 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode 
       <Card sx={{ mt: 3 }}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
-            Quality Assurance Review
+            {isAgentMode ? 'QA_REVIEW' : 'Quality Assurance Review'}
           </Typography>
           <Divider sx={{ my: 2 }} />
           <Box sx={{ mb: 2 }}>
             <Typography variant="subtitle2" color="primary">
-              Validation Status
+              {isAgentMode ? 'VALIDATION_STATUS' : 'Validation Status'}
             </Typography>
             <Typography variant="body2">
               {qa_review.validation_status}
@@ -150,7 +146,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode 
           </Box>
           <Box sx={{ mb: 2 }}>
             <Typography variant="subtitle2" color="primary">
-              Quality Checks
+              {isAgentMode ? 'QUALITY_CHECKS' : 'Quality Checks'}
             </Typography>
             {qa_review.quality_checks.map((check, index) => (
               <Box key={index} sx={{ ml: 2, mb: 1 }}>
@@ -162,7 +158,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode 
           </Box>
           <Box sx={{ mb: 2 }}>
             <Typography variant="subtitle2" color="primary">
-              Improvement Suggestions
+              {isAgentMode ? 'IMPROVEMENT_SUGGESTIONS' : 'Improvement Suggestions'}
             </Typography>
             {qa_review.improvement_suggestions.map((suggestion, index) => (
               <Typography key={index} variant="body2" sx={{ ml: 2, mb: 1 }}>
@@ -172,13 +168,13 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode 
           </Box>
           <Box sx={{ display: 'flex', gap: 2 }}>
             <Typography variant="body2">
-              Clarity Score: {qa_review.clarity_score}
+              {isAgentMode ? `CLARITY_SCORE=${qa_review.clarity_score}` : `Clarity Score: ${qa_review.clarity_score}`}
             </Typography>
             <Typography variant="body2">
-              Accuracy Score: {qa_review.accuracy_score}
+              {isAgentMode ? `ACCURACY_SCORE=${qa_review.accuracy_score}` : `Accuracy Score: ${qa_review.accuracy_score}`}
             </Typography>
             <Typography variant="body2">
-              Actionability Score: {qa_review.actionability_score}
+              {isAgentMode ? `ACTIONABILITY_SCORE=${qa_review.actionability_score}` : `Actionability Score: ${qa_review.actionability_score}`}
             </Typography>
           </Box>
         </CardContent>
