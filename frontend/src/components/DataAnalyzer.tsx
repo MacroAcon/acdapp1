@@ -13,11 +13,13 @@ import {
 import { UploadFile as UploadIcon, Analytics as AnalyticsIcon } from '@mui/icons-material';
 import { analyzeData, AnalysisData, AnalysisResponse } from '../services/api';
 import AnalysisResults from './AnalysisResults';
+import { useUI } from '../contexts/UIContext';
 
 const DataAnalyzer: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [query, setQuery] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const { isAgentMode } = useUI();
   
   const analysisMutation = useMutation<AnalysisResponse, Error, AnalysisData>({
     mutationFn: analyzeData,
@@ -88,34 +90,50 @@ const DataAnalyzer: React.FC = () => {
   };
 
   return (
-    <Card variant="outlined">
+    <Card 
+      variant="outlined"
+      sx={isAgentMode ? {
+        border: '2px solid #00FFB2',
+        '& [data-agent]': {
+          outline: '1px solid rgba(0, 255, 178, 0.3)',
+          outlineOffset: '2px',
+        }
+      } : undefined}
+    >
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <Box>
+          <Box data-agent="file-upload">
             <Button
               variant="contained"
               component="label"
               startIcon={<UploadIcon />}
               fullWidth
+              data-agent-action="upload"
+              data-agent-type="json"
             >
-              Upload Dataset (JSON)
+              {isAgentMode ? 'DATA_UPLOAD_JSON' : 'Upload Dataset (JSON)'}
               <input
                 type="file"
                 hidden
                 accept=".json"
                 onChange={handleFileUpload}
+                data-agent-input="file"
               />
             </Button>
             {file && (
-              <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
-                Selected file: {file.name}
+              <Typography 
+                variant="body2" 
+                sx={{ mt: 1, color: 'text.secondary' }}
+                data-agent="file-name"
+              >
+                {isAgentMode ? `SELECTED_FILE=${file.name}` : `Selected file: ${file.name}`}
               </Typography>
             )}
           </Box>
 
           <TextField
-            label="Analysis Query"
-            placeholder="E.g., What are the key trends in this dataset?"
+            label={isAgentMode ? 'QUERY_INPUT' : 'Analysis Query'}
+            placeholder={isAgentMode ? 'ENTER_ANALYSIS_QUERY' : 'E.g., What are the key trends in this dataset?'}
             multiline
             rows={2}
             value={query}
@@ -123,7 +141,14 @@ const DataAnalyzer: React.FC = () => {
             fullWidth
             disabled={analysisMutation.isPending}
             error={!query.trim() && error !== null}
-            helperText={!query.trim() && error !== null ? 'Query is required' : ''}
+            helperText={!query.trim() && error !== null ? (isAgentMode ? 'QUERY_REQUIRED' : 'Query is required') : ''}
+            data-agent="query-input"
+            data-agent-type="text"
+            sx={isAgentMode ? {
+              '& .MuiOutlinedInput-root': {
+                fontFamily: 'monospace',
+              }
+            } : undefined}
           />
 
           <Button
@@ -138,18 +163,30 @@ const DataAnalyzer: React.FC = () => {
                 <AnalyticsIcon />
               )
             }
+            data-agent="analyze-button"
+            data-agent-action="analyze"
           >
-            {analysisMutation.isPending ? 'Analyzing...' : 'Analyze Data'}
+            {analysisMutation.isPending 
+              ? (isAgentMode ? 'ANALYZING_IN_PROGRESS' : 'Analyzing...') 
+              : (isAgentMode ? 'EXECUTE_ANALYSIS' : 'Analyze Data')}
           </Button>
 
           {error && (
-            <Alert severity="error" onClose={() => setError(null)}>
-              {error}
+            <Alert 
+              severity="error" 
+              onClose={() => setError(null)}
+              data-agent="error-message"
+              data-agent-type="error"
+            >
+              {isAgentMode ? `ERROR: ${error}` : error}
             </Alert>
           )}
 
           {analysisMutation.data && (
-            <AnalysisResults results={analysisMutation.data} />
+            <AnalysisResults 
+              results={analysisMutation.data}
+              isAgentMode={isAgentMode}
+            />
           )}
         </Box>
       </CardContent>

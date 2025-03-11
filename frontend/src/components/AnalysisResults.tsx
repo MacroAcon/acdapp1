@@ -7,6 +7,10 @@ import {
   Divider,
   Grid,
   Alert,
+  List,
+  ListItem,
+  ListItemText,
+  Rating,
 } from '@mui/material';
 import {
   BarChart,
@@ -22,9 +26,10 @@ import { AnalysisResponse } from '../services/api';
 
 interface AnalysisResultsProps {
   results: AnalysisResponse;
+  isAgentMode?: boolean;
 }
 
-const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => {
+const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results, isAgentMode = false }) => {
   const { analysis, visualizations, narrative, qa_review, warnings } = results;
 
   return (
