@@ -1,9 +1,11 @@
-run = "npm start"
+run = "npm run install-all && npm start"
 hidden = [".config", "package-lock.json"]
 
 [env]
 PYTHON_VERSION = "3.9"
 NODE_VERSION = "18.x"
+BROWSER = "none"
+PORT = "3000"
 
 [nix]
 channel = "stable-22_11"
@@ -23,4 +25,14 @@ language = "nodejs"
 
 [deployment]
 run = ["sh", "-c", "npm start"]
-deploymentTarget = "cloudrun" 
+deploymentTarget = "cloudrun"
+
+[ports]
+3000 = {
+  localOnly = false
+  external = 3000
+}
+8000 = {
+  localOnly = false
+  external = 8000
+} 
