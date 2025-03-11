@@ -22,6 +22,7 @@ const DataAnalyzer: React.FC = () => {
   const analysisMutation = useMutation<AnalysisResponse, Error, AnalysisData>({
     mutationFn: analyzeData,
     onError: (error: Error) => {
+      console.error('Analysis error:', error);
       setError(error.message || 'An error occurred during analysis');
     },
   });
@@ -29,9 +30,16 @@ const DataAnalyzer: React.FC = () => {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      console.log('File selected:', file.name);
       setFile(file);
       setError(null);
     }
+  };
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newQuery = e.target.value;
+    console.log('Query updated:', newQuery);
+    setQuery(newQuery);
   };
 
   const handleAnalyze = async () => {
@@ -40,11 +48,18 @@ const DataAnalyzer: React.FC = () => {
       return;
     }
 
+    if (!query.trim()) {
+      setError('Please enter an analysis query');
+      return;
+    }
+
     try {
+      console.log('Starting analysis...');
       const reader = new FileReader();
       reader.onload = async (e) => {
         try {
           const data = JSON.parse(e.target?.result as string);
+          console.log('File parsed successfully');
           const analysisData: AnalysisData = {
             query: query.trim(),
             dataset: {
@@ -54,13 +69,20 @@ const DataAnalyzer: React.FC = () => {
               data: data
             }
           };
+          console.log('Sending analysis request:', analysisData);
           analysisMutation.mutate(analysisData);
         } catch (err) {
+          console.error('JSON parsing error:', err);
           setError('Invalid JSON file format');
         }
       };
+      reader.onerror = (err) => {
+        console.error('File reading error:', err);
+        setError('Error reading file');
+      };
       reader.readAsText(file);
     } catch (err) {
+      console.error('General error:', err);
       setError('Error reading file');
     }
   };
@@ -97,15 +119,18 @@ const DataAnalyzer: React.FC = () => {
             multiline
             rows={2}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={handleQueryChange}
             fullWidth
+            disabled={analysisMutation.isPending}
+            error={!query.trim() && error !== null}
+            helperText={!query.trim() && error !== null ? 'Query is required' : ''}
           />
 
           <Button
             variant="contained"
             color="primary"
             onClick={handleAnalyze}
-            disabled={!file || analysisMutation.isPending}
+            disabled={!file || !query.trim() || analysisMutation.isPending}
             startIcon={
               analysisMutation.isPending ? (
                 <CircularProgress size={20} color="inherit" />
@@ -114,7 +139,7 @@ const DataAnalyzer: React.FC = () => {
               )
             }
           >
-            Analyze Data
+            {analysisMutation.isPending ? 'Analyzing...' : 'Analyze Data'}
           </Button>
 
           {error && (
