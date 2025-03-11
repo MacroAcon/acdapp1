@@ -1,11 +1,14 @@
 {
-  "name": "ai-analytics-platform",
+  "name": "acdapp1",
   "version": "1.0.0",
-  "private": true,
+  "description": "AI Analytics Platform",
   "scripts": {
-    "start": "cd frontend && npm start",
-    "install-all": "npm install && cd frontend && npm install",
+    "install-all": "cd frontend && npm install && cd ../backend && pip install -r requirements.txt",
+    "start": "concurrently \"cd frontend && npm start\" \"cd backend && python main.py\"",
     "build": "cd frontend && npm run build",
     "test": "cd frontend && npm test"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
   }
 } 
