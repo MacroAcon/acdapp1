@@ -13,7 +13,6 @@ import {
   ListItemText,
   Toolbar,
   Typography,
-  useTheme,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -32,13 +31,8 @@ const drawerWidth = 240;
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
