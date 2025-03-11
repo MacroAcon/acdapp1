@@ -29,7 +29,6 @@ interface LayoutProps {
 const drawerWidth = 240;
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -122,7 +121,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               width: drawerWidth,
             },
           }}
-          open={isSidebarOpen}
+          open
         >
           {drawer}
         </Drawer>
